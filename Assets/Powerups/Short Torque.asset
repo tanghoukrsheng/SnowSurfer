@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Short Torque
   m_EditorClassIdentifier: Assembly-CSharp::PowerupSC
   powerupType: torque
-  valueChange: 10
-  time: 2
+  valueChange: 20
+  time: 4

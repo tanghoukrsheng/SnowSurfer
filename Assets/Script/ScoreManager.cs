@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour
     {
         // This method can be used to display the score based on the player's flips or other actions   
         int flipScore = playerController.getFlipCount() * 100; 
-        scoreText.text = "Score: " + flipScore; // Update the score text with the current score
+        scoreText.text = "Score : " + flipScore; // Update the score text with the current score
         
     }
 }
