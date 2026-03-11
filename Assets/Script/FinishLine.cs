@@ -13,7 +13,7 @@ public class FinishLine : MonoBehaviour
         int layerIndex = LayerMask.NameToLayer("Player"); // find the index of the player layer
         if (collision.gameObject.layer == layerIndex) // Check if the collided object is on the player layer
         {
-            print("You win!");
+            print("You won!");
             winParticle.Play(); // Play the win particle effect
             Invoke("reloadScene", delayBeforeReload); // Call the reloadScene method after a delay of 2 seconds
         }
