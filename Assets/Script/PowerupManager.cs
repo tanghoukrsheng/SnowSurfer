@@ -7,12 +7,14 @@ public class PowerupManager : MonoBehaviour
 
    SpriteRenderer spriteRenderer;
 
+   float timer;
    float timerleft;
+
     void Start()
      {
           playerController = FindFirstObjectByType<PlayerController>(); // Find the PlayerController script in the scene
           spriteRenderer = GetComponent<SpriteRenderer>();
-          timerleft=powerup.GetTime    ;
+          timer= powerup.GetTime ;
      }
 
     void Update()
@@ -25,6 +27,7 @@ public class PowerupManager : MonoBehaviour
         if (collision.gameObject.layer == layerIndex && spriteRenderer.enabled) // Check if the collided object is on the player layer
         {
            playerController.ActivatePowerup(powerup);
+           timerleft = timer; // Reset the timer to the duration defined in the PowerupSC
            spriteRenderer.enabled = false; // Disable the sprite renderer to make the powerup invisible after being collected
            
         }
@@ -39,7 +42,6 @@ public class PowerupManager : MonoBehaviour
             
                 if(timerleft<=0)
                 {
-                   print("Powerup expired!"); // Print a message to the console when the powerup expires
                    playerController.DeactivatePowerup(powerup); // Call the method to deactivate the powerup effect on the player
                 }
             

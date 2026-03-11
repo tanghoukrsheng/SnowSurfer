@@ -94,16 +94,19 @@ public class PlayerController : MonoBehaviour
        
         powerUpCount++;
         powerupParticle.Play(); // Play the powerup particle effect when a powerup is activated
+
         if (powerup.GetPowerupType == "speed")
         {
             baseSpeed += powerup.GetValueChange; // Increase the base speed by the value defined in the PowerupSC
             boostSpeed += powerup.GetValueChange; // Increase the boost speed by the value defined in the PowerupSC
-           
+            print("Speed powerup activated!"); // Print a message to the console when a speed powerup is activated
+
         }
         
         else if(powerup.GetPowerupType == "torque")
         {
             torqueAmount += powerup.GetValueChange; // Increase the torque amount by the value defined in the PowerupSC
+            print("Torque powerup activated!"); // Print a message to the console when a torque powerup is activated
         }
 
 
@@ -122,12 +125,14 @@ public class PlayerController : MonoBehaviour
         {
             baseSpeed -= powerup.GetValueChange; // Decrease the base speed by the value defined in the PowerupSC
             boostSpeed -= powerup.GetValueChange; // Decrease the boost speed by the value defined in the PowerupSC
+            print("Speed powerup expired!"); // Print a message to the console when a speed powerup expires
         }
         else if (powerup.GetPowerupType == "torque")
         {
             torqueAmount -= powerup.GetValueChange; // Decrease the torque amount by the value defined in the PowerupSC
-        }
+            print("Torque powerup expired!"); // Print a message to the console when a torque powerup expires
        
+    }
     }
 
 }
