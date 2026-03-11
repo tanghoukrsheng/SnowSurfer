@@ -7,10 +7,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float torqueAmount = 1f;
     [SerializeField] float baseSpeed = 15f;
     [SerializeField] float boostSpeed = 20f;
+    [SerializeField] ParticleSystem powerupParticle;
     InputAction moveAction;
     Rigidbody2D rb;
     Vector2 moveVector;
     SurfaceEffector2D surfaceEffector;
+
+    int powerUpCount; // Variable to count the number of active powerups
 
      bool canControl = true; // Flag to determine if the player can control the character
 
@@ -81,12 +84,50 @@ public class PlayerController : MonoBehaviour
         totalRotation = 0f; // Reset the total rotation for the next flip
     }
 
-    print(flipCount);
     previousRotation = currentRotation;
     }
 
 
+    public void ActivatePowerup(PowerupSC powerup)
+
+    {
+       
+        powerUpCount++;
+        powerupParticle.Play(); // Play the powerup particle effect when a powerup is activated
+        if (powerup.GetPowerupType == "speed")
+        {
+            baseSpeed += powerup.GetValueChange; // Increase the base speed by the value defined in the PowerupSC
+            boostSpeed += powerup.GetValueChange; // Increase the boost speed by the value defined in the PowerupSC
+           
+        }
+        
+        else if(powerup.GetPowerupType == "torque")
+        {
+            torqueAmount += powerup.GetValueChange; // Increase the torque amount by the value defined in the PowerupSC
+        }
 
 
+    }
+
+   public void DeactivatePowerup(PowerupSC powerup)
+    {
+
+        powerUpCount--;
+        if(powerUpCount == 0)
+        {
+            powerupParticle.Stop();
+        }
+
+        if (powerup.GetPowerupType == "speed")
+        {
+            baseSpeed -= powerup.GetValueChange; // Decrease the base speed by the value defined in the PowerupSC
+            boostSpeed -= powerup.GetValueChange; // Decrease the boost speed by the value defined in the PowerupSC
+        }
+        else if (powerup.GetPowerupType == "torque")
+        {
+            torqueAmount -= powerup.GetValueChange; // Decrease the torque amount by the value defined in the PowerupSC
+        }
+       
+    }
 
 }
