@@ -12,19 +12,40 @@ public class PlayerController : MonoBehaviour
     Vector2 moveVector;
     SurfaceEffector2D surfaceEffector;
 
+     bool canControl = true; // Flag to determine if the player can control the character
+
+     float previousRotation; // Variable to store the previous rotation of the player
+     float totalRotation;
+     int flipCount ; // Variable to count the number of flips performed by the player
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         moveAction = InputSystem.actions.FindAction("Move");
         rb = GetComponent<Rigidbody2D>();
-        surfaceEffector = FindObjectOfType<SurfaceEffector2D>(); // Find the SurfaceEffector2D in the scene
+        surfaceEffector = FindFirstObjectByType<SurfaceEffector2D>(); // Find the SurfaceEffector2D in the scene
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (canControl)
+        {
         RotatePlayer();
         BoostPlayer();
+        CalculateFlips();
+        }
+
+    }
+
+    public int getFlipCount()
+    {
+        return flipCount; // Method to get the current flip count, can be called from other scripts
+    }
+
+    public void DisableControl()
+    {
+        canControl = false; // Method to disable player control, can be called from other scripts
     }
 
 
@@ -47,4 +68,25 @@ public class PlayerController : MonoBehaviour
         else
            surfaceEffector.speed = baseSpeed; // Set the speed of the SurfaceEffector2
     }
+
+    void CalculateFlips()
+    {
+    float currentRotation = transform.rotation.eulerAngles.z;
+
+    totalRotation += Mathf.DeltaAngle(previousRotation, currentRotation); // Calculate the change in rotation since the last frame and add it to the total rotation
+    
+    if(totalRotation > 340f || totalRotation < -340f) // Check if the total rotation exceeds 360 degrees in either direction
+    {
+        flipCount++; // Increment the flip count
+        totalRotation = 0f; // Reset the total rotation for the next flip
+    }
+
+    print(flipCount);
+    previousRotation = currentRotation;
+    }
+
+
+
+
+
 }

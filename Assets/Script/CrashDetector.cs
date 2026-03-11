@@ -7,6 +7,12 @@ public class CrashDetector : MonoBehaviour
 
     [SerializeField] float delayBeforeReload = 2f;
     [SerializeField] ParticleSystem crashParticle;
+    PlayerController playerController; // Reference to the PlayerController script
+
+    void Start()
+    {
+        playerController = FindFirstObjectByType<PlayerController>(); // Find the PlayerController script in the scene
+    }
   void OnTriggerEnter2D(Collider2D collision)
     {
         int layerIndex = LayerMask.NameToLayer("Floor"); // find the index of the floor layer
@@ -14,6 +20,7 @@ public class CrashDetector : MonoBehaviour
         {
            print("You lost!");
            crashParticle.Play(); // Play the crash particle effect
+           playerController.DisableControl();
            Invoke("reloadScene", delayBeforeReload); // Call the reloadScene method after a delay of 2 seconds
         }
     }
